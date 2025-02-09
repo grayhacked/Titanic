@@ -3,8 +3,11 @@ import pickle
 import pandas as pd
 
 # Charger le modèle entraîné
-with open("/mon_modele_optimise.pkl", "rb") as file:
-    model = pickle.load(file)
+with open("Model/Tmodele.pkl", "rb") as file:
+    modele = pickle.load(file)
+
+# Vérifier le type de l'objet
+print(type(modele))
 
 # Initialiser FastAPI
 app = FastAPI()
@@ -22,7 +25,7 @@ def predict(Pclass: int, Sex: str, Age: int, SibSp: int, Parch: int, Fare: float
     data['Embarked'] = data['Embarked'].map({'S': 0, 'C': 1, 'Q': 2})
 
     # Prédiction
-    prediction = model.predict(data)[0]
+    prediction = modele.predict(data)[0]
     
     # Retourner la réponse
     return {"Survivra": bool(prediction)}
